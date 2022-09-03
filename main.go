@@ -1,7 +1,13 @@
 package main
 
-import "go-challenge/infrastructure/dbconfig"
+import (
+	"github.com/gin-gonic/gin"
+	"go-challenge/infrastructure/dbconfig"
+	"go-challenge/infrastructure/routes"
+)
 
 func main() {
-	dbconfig.Initialize("test.db")
+	dbconfig.InitDB()
+	r := gin.Default()
+	routes.SetupRouter(r)
 }
