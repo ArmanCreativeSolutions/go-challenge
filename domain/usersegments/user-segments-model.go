@@ -1,13 +1,12 @@
 package usersegments
 
 import (
-	"gorm.io/gorm"
+	"github.com/google/uuid"
 	"time"
 )
 
 type UserSegment struct {
-	gorm.Model
-	Id        string
+	Id        uuid.UUID `gorm:"primaryKey"`
 	Segment   string
 	CreatedAt time.Time
 	UpdatedAt time.Time

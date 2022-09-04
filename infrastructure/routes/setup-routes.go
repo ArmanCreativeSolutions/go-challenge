@@ -3,8 +3,10 @@ package routes
 import (
 	"github.com/gin-gonic/gin"
 	user_segments "go-challenge/application/user-segments"
-	"go-challenge/domain/usersegments"
+	"go-challenge/infrastructure/dbconfig"
+	"go-challenge/infrastructure/repository"
 	"go-challenge/presentation/usersegmentcontroller"
+	"log"
 )
 
 const (
@@ -14,7 +16,12 @@ const (
 
 func SetupRouter(r *gin.Engine) {
 
-	userSegmentRepository := usersegments.NewUserSegmentRepository()
+	dbService := dbconfig.NewSqliteDBService()
+	_, err := dbService.InitDB()
+	if err != nil {
+		log.Fatal(err)
+	}
+	userSegmentRepository := repository.NewUserSegmentRepository(dbService)
 	userSegmentService := user_segments.NewUserSegmentService(userSegmentRepository)
 	userSegmentController := usersegmentcontroller.NewUserSegmentController(userSegmentService)
 

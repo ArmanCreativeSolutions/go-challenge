@@ -11,16 +11,16 @@ import (
 
 const DB_NAME = "test.db"
 
-func InitDB() {
-	db := ConnectDB()
-	err := db.AutoMigrate(&usersegments.UserSegment{})
-	if err != nil {
-		log.Fatal(err)
-	}
-	log.Println("migrated successfully")
+type SqliteDBService struct {
+	Db *gorm.DB
 }
 
-func ConnectDB() *gorm.DB {
+func NewSqliteDBService() *SqliteDBService {
+	return &SqliteDBService{}
+}
+
+func (s *SqliteDBService) InitDB() (*gorm.DB, error) {
+	//Instance := ConnectDB()
 	err := os.Remove(DB_NAME)
 	if err != nil {
 		log.Println("error removing file", err)
@@ -28,10 +28,25 @@ func ConnectDB() *gorm.DB {
 		log.Println("successfully deleted file")
 	}
 
-	db, err := gorm.Open(sqlite.Open(DB_NAME), &gorm.Config{})
+	s.Db, err = gorm.Open(sqlite.Open(DB_NAME), &gorm.Config{})
 	if err != nil {
 		log.Fatal(err)
 	}
 	log.Println("database connected...")
-	return db
+	err = s.Db.AutoMigrate(&usersegments.UserSegment{})
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Println("migrated successfully")
+	return s.Db, err
+}
+
+//
+//func ConnectDB() *gorm.DB {
+//
+//	return db
+//}
+
+func (s *SqliteDBService) GetDB() *gorm.DB {
+	return s.Db
 }
