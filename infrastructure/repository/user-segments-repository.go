@@ -37,3 +37,14 @@ func (userSegmentRepository *UserSegmentRepository) Create(dto dto.CreateUserSeg
 	result := userSegmentRepository.dbService.GetDB().Create(&userSegment).Error
 	return userSegment, result
 }
+
+func (userSegmentRepository *UserSegmentRepository) CountUserSegmentsBySegmentTitle(segmentTitle string) (int64, error) {
+	var userSegment usersegments.UserSegment
+	var userSegmentCount int64
+	err := userSegmentRepository.dbService.GetDB().
+		Model(&userSegment).
+		Count(&userSegmentCount).
+		Where("segment = ?", segmentTitle).
+		Error
+	return userSegmentCount, err
+}

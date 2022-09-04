@@ -25,3 +25,15 @@ func (userSegmentService *UserSegmentService) CreateUserSegment(createUserSegmen
 	}
 	return createUserResponse, nil
 }
+
+func (userSegmentService *UserSegmentService) CountUserSegmentsBySegmentTitle(segmentTitle string) (dto.CountUserSegmentResponse, error) {
+	count, err := userSegmentService.userSegmentRepository.CountUserSegmentsBySegmentTitle(segmentTitle)
+	if err != nil {
+		return dto.CountUserSegmentResponse{}, err
+	}
+	countResp := dto.CountUserSegmentResponse{
+		Title: segmentTitle,
+		Count: count,
+	}
+	return countResp, nil
+}

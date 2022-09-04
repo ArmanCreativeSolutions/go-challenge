@@ -34,7 +34,7 @@ func SetupRouter(r *gin.Engine) {
 			publicApi.GET("user-segments/:id", userSegmentController.FetchUserSegmentById)
 			publicApi.PUT("user-segments/:id", userSegmentController.UpdateUserSegment)
 			publicApi.DELETE("user-segments/:id", userSegmentController.DeleteUserSegment)
-			publicApi.GET("user-segments/count-segments/:title", userSegmentController.CountSegmentsByTitle)
+			publicApi.GET("user-segments/count-segments", userSegmentController.CountSegmentsByTitle)
 			publicApi.POST("user-segments/remove-segment-scheduled", userSegmentController.RemoveSegmentScheduled)
 		}
 	}
