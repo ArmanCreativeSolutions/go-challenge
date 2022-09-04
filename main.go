@@ -10,4 +10,5 @@ func main() {
 	dbconfig.InitDB()
 	r := gin.Default()
 	routes.SetupRouter(r)
+	r.Run(":8080")
 }
