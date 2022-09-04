@@ -11,3 +11,6 @@ type CountUserSegmentResponse struct {
 	Title string `json:"title"`
 	Count int64  `json:"count"`
 }
+
+type RemoveSegmentScheduledResponse struct {
+}

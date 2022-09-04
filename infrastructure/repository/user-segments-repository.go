@@ -6,6 +6,7 @@ import (
 	"go-challenge/application/user-segments/dto"
 	"go-challenge/domain/usersegments"
 	"go-challenge/infrastructure/dbconfig"
+	"time"
 )
 
 type UserSegmentRepository struct {
@@ -47,4 +48,15 @@ func (userSegmentRepository *UserSegmentRepository) CountUserSegmentsBySegmentTi
 		Where("segment = ?", segmentTitle).
 		Error
 	return userSegmentCount, err
+}
+
+func (userSegmentRepository *UserSegmentRepository) RemoveSegmentScheduledResponse() error {
+	var userSegment usersegments.UserSegment
+	now := time.Now()
+	err := userSegmentRepository.dbService.GetDB().Debug().
+		Model(&userSegment).
+		Where("julianday('now') - julianday('created_at') > ?", 14).
+		Update("updated_at", now).
+		Error
+	return err
 }

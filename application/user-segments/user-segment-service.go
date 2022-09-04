@@ -37,3 +37,11 @@ func (userSegmentService *UserSegmentService) CountUserSegmentsBySegmentTitle(se
 	}
 	return countResp, nil
 }
+
+func (userSegmentService *UserSegmentService) RemoveSegmentScheduled() (dto.RemoveSegmentScheduledResponse, error) {
+	err := userSegmentService.userSegmentRepository.RemoveSegmentScheduledResponse()
+	if err != nil {
+		return dto.RemoveSegmentScheduledResponse{}, err
+	}
+	return dto.RemoveSegmentScheduledResponse{}, nil
+}

@@ -29,11 +29,7 @@ func SetupRouter(r *gin.Engine) {
 	{
 		publicApi := routes.Group(public)
 		{
-			publicApi.GET("user-segments", userSegmentController.FetchUserSegments)
 			publicApi.POST("user-segments", userSegmentController.CreateUserSegment)
-			publicApi.GET("user-segments/:id", userSegmentController.FetchUserSegmentById)
-			publicApi.PUT("user-segments/:id", userSegmentController.UpdateUserSegment)
-			publicApi.DELETE("user-segments/:id", userSegmentController.DeleteUserSegment)
 			publicApi.GET("user-segments/count-segments", userSegmentController.CountSegmentsByTitle)
 			publicApi.POST("user-segments/remove-segment-scheduled", userSegmentController.RemoveSegmentScheduled)
 		}

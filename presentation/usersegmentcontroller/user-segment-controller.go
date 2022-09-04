@@ -19,10 +19,6 @@ func NewUserSegmentController(userSegmentService *user_segments.UserSegmentServi
 	return &UserSegmentController{userSegmentService: userSegmentService}
 }
 
-func (*UserSegmentController) FetchUserSegments(c *gin.Context) {
-
-}
-
 func (userSegmentController *UserSegmentController) CreateUserSegment(c *gin.Context) {
 	var createReq dto.CreateUserSegmentDTO
 	err := c.ShouldBindJSON(&createReq)
@@ -54,18 +50,6 @@ func (userSegmentController *UserSegmentController) CreateUserSegment(c *gin.Con
 	c.JSON(http.StatusOK, gin.H{"response": response})
 }
 
-func (*UserSegmentController) FetchUserSegmentById(c *gin.Context) {
-
-}
-
-func (*UserSegmentController) UpdateUserSegment(c *gin.Context) {
-
-}
-
-func (*UserSegmentController) DeleteUserSegment(c *gin.Context) {
-
-}
-
 func (userSegmentController *UserSegmentController) CountSegmentsByTitle(c *gin.Context) {
 	segmentTitle := c.Query("title")
 	segmentTitle = strings.TrimSpace(segmentTitle)
@@ -92,6 +76,16 @@ func (userSegmentController *UserSegmentController) CountSegmentsByTitle(c *gin.
 	c.JSON(http.StatusOK, gin.H{"response": response})
 }
 
-func (*UserSegmentController) RemoveSegmentScheduled(c *gin.Context) {
-
+func (userSegmentController *UserSegmentController) RemoveSegmentScheduled(c *gin.Context) {
+	removeSegmentResp, err := userSegmentController.userSegmentService.RemoveSegmentScheduled()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"response": Response.ErrorResponse{Error: err.Error()}})
+		return
+	}
+	response := Response.GeneralResponse{
+		Error:   false,
+		Message: "",
+		Data:    removeSegmentResp,
+	}
+	c.JSON(http.StatusOK, gin.H{"response": response})
 }
