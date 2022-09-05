@@ -31,7 +31,7 @@ func SetupRouter(r *gin.Engine) {
 		{
 			publicApi.POST("user-segments", userSegmentController.CreateUserSegment)
 			publicApi.GET("user-segments/count-segments", userSegmentController.CountSegmentsByTitle)
-			publicApi.POST("user-segments/remove-segment-scheduled", userSegmentController.RemoveSegmentScheduled)
+			publicApi.POST("user-segments/remove-segment-cron-job", userSegmentController.RemoveSegmentCronJob)
 		}
 	}
 }

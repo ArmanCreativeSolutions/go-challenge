@@ -12,5 +12,6 @@ type CountUserSegmentResponse struct {
 	Count int64  `json:"count"`
 }
 
-type RemoveSegmentScheduledResponse struct {
+type RemoveSegmentCronJobResponse struct {
+	JobStatus string
 }

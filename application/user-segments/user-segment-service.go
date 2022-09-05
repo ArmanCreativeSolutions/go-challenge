@@ -38,10 +38,13 @@ func (userSegmentService *UserSegmentService) CountUserSegmentsBySegmentTitle(se
 	return countResp, nil
 }
 
-func (userSegmentService *UserSegmentService) RemoveSegmentScheduled() (dto.RemoveSegmentScheduledResponse, error) {
-	err := userSegmentService.userSegmentRepository.RemoveSegmentScheduledResponse()
+func (userSegmentService *UserSegmentService) RemoveSegmentCronJob() (dto.RemoveSegmentCronJobResponse, error) {
+	err := userSegmentService.userSegmentRepository.RemoveSegmentCronJob()
 	if err != nil {
-		return dto.RemoveSegmentScheduledResponse{}, err
+		return dto.RemoveSegmentCronJobResponse{}, err
 	}
-	return dto.RemoveSegmentScheduledResponse{}, nil
+	removeSegmentCronJobResp := dto.RemoveSegmentCronJobResponse{
+		JobStatus: "Successful",
+	}
+	return removeSegmentCronJobResp, nil
 }

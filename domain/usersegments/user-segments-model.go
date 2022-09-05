@@ -8,6 +8,6 @@ import (
 type UserSegment struct {
 	Id        uuid.UUID `gorm:"primaryKey"`
 	Segment   string
-	CreatedAt time.Time
-	UpdatedAt time.Time
+	CreatedAt time.Time `gorm:"type:datetime"`
+	UpdatedAt time.Time `gorm:"type:datetime"`
 }

@@ -76,8 +76,8 @@ func (userSegmentController *UserSegmentController) CountSegmentsByTitle(c *gin.
 	c.JSON(http.StatusOK, gin.H{"response": response})
 }
 
-func (userSegmentController *UserSegmentController) RemoveSegmentScheduled(c *gin.Context) {
-	removeSegmentResp, err := userSegmentController.userSegmentService.RemoveSegmentScheduled()
+func (userSegmentController *UserSegmentController) RemoveSegmentCronJob(c *gin.Context) {
+	removeSegmentResp, err := userSegmentController.userSegmentService.RemoveSegmentCronJob()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"response": Response.ErrorResponse{Error: err.Error()}})
 		return

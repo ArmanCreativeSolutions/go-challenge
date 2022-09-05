@@ -50,12 +50,13 @@ func (userSegmentRepository *UserSegmentRepository) CountUserSegmentsBySegmentTi
 	return userSegmentCount, err
 }
 
-func (userSegmentRepository *UserSegmentRepository) RemoveSegmentScheduledResponse() error {
+func (userSegmentRepository *UserSegmentRepository) RemoveSegmentCronJob() error {
 	var userSegment usersegments.UserSegment
 	now := time.Now()
 	err := userSegmentRepository.dbService.GetDB().Debug().
 		Model(&userSegment).
-		Where("julianday('now') - julianday('created_at') > ?", 14).
+		Where("julianday('now') - julianday('updated_at') > ?", 14).
+		Update("segment", nil).
 		Update("updated_at", now).
 		Error
 	return err
