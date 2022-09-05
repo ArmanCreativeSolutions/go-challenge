@@ -10,8 +10,9 @@ import (
 )
 
 const (
-	prefix = "/api/v1/"
-	public = ""
+	prefix   = "/api/v1/"
+	public   = ""
+	cronJobs = "/cron-jobs"
 )
 
 func SetupRouter(r *gin.Engine) {
@@ -31,7 +32,10 @@ func SetupRouter(r *gin.Engine) {
 		{
 			publicApi.POST("user-segments", userSegmentController.CreateUserSegment)
 			publicApi.GET("user-segments/count-segments", userSegmentController.CountSegmentsByTitle)
-			publicApi.POST("user-segments/remove-segment-cron-job", userSegmentController.RemoveSegmentCronJob)
+		}
+		cronJobApi := routes.Group(cronJobs)
+		{
+			cronJobApi.POST("user-segments/remove-segment", userSegmentController.RemoveSegmentCronJob)
 		}
 	}
 }
