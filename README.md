@@ -59,3 +59,4 @@ also, application runs on localhost:8080 which is also hardcoded in main.go.
 - I tried to dockerized this project with a proper makefile, but the whole application package structure needed to be changed.
 - I prefer to put repository next to the related model in domain package (I have done this practice in Java), however, since I had to do dependency injection without an IoC container (like Spring boot), I faced a circular dependency, so I had to move the repository from domain to infrastructure. I think the best solution is to have a repository interface and implement it in each repository.
 - Use a middleware for logging could be a better practice.
+- I could not find a proper practice in order to implement cron jobs in a gin context, so, I designed a REST client to call a function every 14 days. 
