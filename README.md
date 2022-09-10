@@ -1,40 +1,62 @@
-# How many users? (Go Challenge)
+# Arman Go Challenge
+This project using Domain Driven Design handles request from user segment service using: 
+* [**Gin Gonic**](https://github.com/gin-gonic/gin)
+* [**Gorm**](https://github.com/go-gorm/gorm)
+* [**Sqlite**](https://sqlite.org)
 
-Suppose there is a "User Segmentation Service" (USS) that segments users based on their activities.
-For example, if a user visits sports news, USS classifies and tags "sport" to him.
-So we have a pair: (the user_id, and the segment) for example, (u104010, "sports").
+I use gin framework in order to make application communicate with
+REST api, and Sqlite because our data is structured, and also for its simplicity.
+I use gorm since I prefer to use ORMs in terms of safety 
+and more control over data programmatically. Also, I have chosen REST api
+because it allows great variety of data formats, which make services
+more flexible, and I have prior proficiency in working with REST.
 
-We want to develop an Estimation Service (ES) that interacts with USS directly.
-ES receives the pair from USS as input and stores it.
-The responsibility of ES is to answer a simple query: "How many users exist on a specific segment?".
-For example, "how many users are in the sports segment?".
+## Terminology
+- __User Segment__ &mdash; User segment is the main entity of this project. in each record I store user id which is considers as a UUID and the segment related to that user which has string format.
 
-![](https://raw.githubusercontent.com/ArmanCreativeSolutions/go-challenge/main/Untitled%20Diagram.drawio.png?raw=true)
+## Structure of the Code
 
-The query is simple, but two assumptions may make it a little challenging:
-- A specific user remains just two weeks on a segment. After that,
-we should not count "u104010" on the sports segment.
-- There are millions of users and hundreds of segments. So your solution(s) must be scalable
+```
+ ┌───┐
+ │ / │
+ └─┬─┘
+   │
+   ├───────▶ application ───▶ user-segments ─ ─ ─ ─ related service
+   │                                         │ 
+   │                                         └──▶ dto ─ ─ ─ ─ data transfer object to recieve and map requests to models and vice versa
+   │
+   ├───────▶ domain ─ ─ ─ ─ models are defined here
+   │                   │ 
+   │                   └──▶ usersegments ─ ─ ─ ─ User Segment Model
+   │
+   ├───────▶ infrastructure  ─ ─ ─ ─ ─ Configs, general models (validations, response, errors, etc) and everything that the whole application uses
+   │                             │
+   │                             └──▶ dbconfig ─ ─ ─ ─ ─  Database configurations
+   │                             │
+   │                             └──▶ exception ─ ─ ─ ─ ─ General models for error handling
+   │                             │
+   │                             └──▶ repository ─ ─ ─ ─ ─ Repositories to communicate with database
+   │                             │
+   │                             └──▶ response ─ ─ ─ ─ ─ General models for application responses
+   │                             │
+   │                             └──▶ routes ─ ─ ─ ─ ─ Api routing setup
+   │                             │
+   │                             └──▶ validation ─ ─ ─ ─ ─ General validation for requests
+   │
+   ├───────▶ presentation ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ Controller layer 
+   │              │
+   │              └──▶ cronjobs ─ ─ ─ ─ ─ ─ ─ ─ ─ Define cron jobs                          
+   │              │
+   │              └──▶ usersegmentcontroller ─ ─ ─ Expose apis
+```
 
+## Setting up the environment
+The system needs to have sqlite database. database name is hardcoded in sqlite-config.go as a constant variable. it is removed and created with each run.
+also, application runs on localhost:8080 which is also hardcoded in main.go.
 
-## Requirements
-
-- Implement a (REST API, RESTful API, soap, Graphql, RPC, gRPC, or whatever protocol you prefer)
-interface to receive data (user_id, segment pair) from USS. 
-- Implement a method to estimate the number of users in a specific segment. ( `func estimate(segment) -> number of users`)
-
-## Implementation details
-
-Try to write your code as reusable and readable as possible.
-Also, don't forget to document your code and clear the reasons for all your decisions in the code.
-
-If your solution is not simple enough for implementing fast, you can just describe it in your documents.
-
-Use any tools that you prefer just explain the reason of choices in your documents.
-For example explain why you choose REST API for receiving data.
-
-It is more valuable to us that the project comes with unit tests.
-
-Please fork this repository and add your code to that.
-Don't forget that your commits are so important.
-So be sure that you're committing your code often with a proper commit message.
+## Current issues
+- It is better to use a separate environment file to avoid hardcode database name and port address.
+- I tried to dockerized this project with a proper makefile, but the whole application package structure needed to be changed.
+- I prefer to put repository next to the related model in domain package (I have done this practice in Java), however, since I had to do dependency injection without an IoC container (like Spring boot), I faced a circular dependency, so I had to move the repository from domain to infrastructure. I think the best solution is to have a repository interface and implement it in each repository.
+- Use a middleware for logging could be a better practice.
+- I could not find a proper practice in order to implement cron jobs in a gin context, so, I designed a REST client to call a function every 14 days. 
