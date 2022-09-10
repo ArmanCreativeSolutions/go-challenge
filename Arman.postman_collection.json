@@ -1,0 +1,209 @@
+{
+	"info": {
+		"_postman_id": "f726f960-6fa9-4363-83e6-bda1f789aace",
+		"name": "Arman",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13021723"
+	},
+	"item": [
+		{
+			"name": "Create User Segment",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userId\" : \"7db7fd9b-4378-492f-b624-907c0c21b506\",\r\n    \"segment\" : \"segment\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/user-segments",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"user-segments"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Create User Segment",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\" : \"7db7fd9b-4378-492f-b624-907c0c21b506\",\r\n    \"segment\" : \"segment\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/user-segments",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"user-segments"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 10 Sep 2022 13:16:05 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "230"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"response\": {\n        \"error\": false,\n        \"message\": \"user segment created\",\n        \"data\": {\n            \"Id\": \"7db7fd9b-4378-492f-b624-907c0c21b506\",\n            \"Segment\": \"segment\",\n            \"CreatedAt\": \"2022-09-10T17:46:05.6724989+04:30\",\n            \"UpdatedAt\": \"2022-09-10T17:46:05.6724989+04:30\"\n        }\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "CountByTitle",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/v1/user-segments/count-segments?title=segment",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"user-segments",
+						"count-segments"
+					],
+					"query": [
+						{
+							"key": "title",
+							"value": "segment"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "CountByTitle",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/user-segments/count-segments?title=segment",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"user-segments",
+								"count-segments"
+							],
+							"query": [
+								{
+									"key": "title",
+									"value": "segment"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 10 Sep 2022 13:16:18 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "78"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"response\": {\n        \"error\": false,\n        \"message\": \"\",\n        \"data\": {\n            \"title\": \"segment\",\n            \"count\": 1\n        }\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Scheduled",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": [
+				{
+					"name": "Scheduled",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/cron-jobs/user-segments/remove-segment",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"cron-jobs",
+								"user-segments",
+								"remove-segment"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 10 Sep 2022 13:16:33 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "75"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"response\": {\n        \"error\": false,\n        \"message\": \"\",\n        \"data\": {\n            \"JobStatus\": \"Successful\"\n        }\n    }\n}"
+				}
+			]
+		}
+	]
+}
